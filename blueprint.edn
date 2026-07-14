@@ -1,0 +1,10 @@
+{:itonami.blueprint/id "cloud-itonami-isic-8422"
+ :itonami.blueprint/name "Defence Procurement and Logistics Administration"
+ :itonami.blueprint/isic-rev5 "8422"
+ :itonami.blueprint/domain :defence/procurement-logistics
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:public-procurement-accountability :supply-chain-transparency :defence-transparency]
+ :itonami.blueprint/governor :defence-procurement-governor
+ :itonami.blueprint/robotics true
+ :itonami.blueprint/required-technologies [:robotics :identity :forms :dmn :bpmn :audit-ledger]
+ :itonami.blueprint/status :public-oss}
