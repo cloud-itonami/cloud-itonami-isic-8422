@@ -30,7 +30,7 @@ This actor is designed for **administrative and logistical operations only**. Se
 All pull requests must:
 
 1. Pass the full test suite
-2. Maintain the closed allowlist of permitted operations (see `src/defence/advisor.cljc`)
+2. Maintain the closed allowlist of permitted operations (see `src/defence/advisor.kotoba`)
 3. Include updated tests for new functionality
 4. Include updated documentation if scope or design changes
 
