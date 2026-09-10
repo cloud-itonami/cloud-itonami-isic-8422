@@ -41,7 +41,7 @@ All proposals (committed or held) leave an append-only audit trail. Regular audi
 
 Security-critical code (Governor, Advisor, allowlist validation) is covered by tests in:
 
-- `test/defence/governor_test.clj`
-- `test/defence/actor_test.clj`
+- `test/defence/governor_test.kotoba`
+- `test/defence/actor_test.kotoba`
 
 All changes to the Governor or permitted-operations allowlist must include tests.

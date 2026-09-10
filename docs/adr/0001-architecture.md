@@ -129,12 +129,12 @@ Example: if the architect listed forbidden ops as `#{:weapons :personnel-deploym
 
 Three tiers of tests:
 
-1. **Governor tests** (`test/defence/governor_test.clj`):
+1. **Governor tests** (`test/defence/governor_test.kotoba`):
    - Hard violations (unregistered vendor, no-actuation, scope-boundary) always `:hard? true`
    - Escalation invariants (procurement drafting, budget threshold, low confidence) always `:escalate? true`
    - Clean proposals (registered vendor, low-risk op, high confidence) pass through with `:ok? true`
 
-2. **Actor/Graph tests** (`test/defence/actor_test.clj`):
+2. **Actor/Graph tests** (`test/defence/actor_test.kotoba`):
    - A clean request commits and records immediately
    - An unregistered-vendor request holds without committing
    - An escalated request interrupts, then commits after `approve!`

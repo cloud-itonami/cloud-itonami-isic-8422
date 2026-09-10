@@ -79,15 +79,15 @@ human-in-the-loop interrupt/resume via checkpointing.
                                            +-> :hold               (:hard? true)
 ```
 
-- `src/defence/store.cljc` — `Store` protocol + `MemStore`:
+- `src/defence/store.kotoba` — `Store` protocol + `MemStore`:
   registered vendors, committed procurement records, an append-only audit ledger.
-- `src/defence/advisor.cljc` — `Advisor` protocol; `mock-advisor`
+- `src/defence/advisor.kotoba` — `Advisor` protocol; `mock-advisor`
   (deterministic, default) proposes a procurement operation from a
   request; `llm-advisor` wraps a `langchain.model/ChatModel` — either
   way the advisor only ever produces a `:propose`-effect proposal,
   never a committed record, and LLM parse failures always yield
   `confidence 0.0` (forces escalation, never fabricated confidence).
-- `src/defence/governor.cljc` — `DefenceProcurementGovernor/check`: a pure
+- `src/defence/governor.kotoba` — `DefenceProcurementGovernor/check`: a pure
   function, wired as its own `:govern` node. Hard invariants
   (unregistered vendor, a proposal whose `:effect` isn't `:propose`, any
   proposal touching weapons/personnel/classified operations) always
@@ -96,7 +96,7 @@ human-in-the-loop interrupt/resume via checkpointing.
   always route to `:request-approval` — an `interrupt-before` node that
   the graph checkpoints and only resumes on explicit human approval
   (`actor/approve!`).
-- `src/defence/actor.cljc` — `build-graph`, `run-request!`,
+- `src/defence/actor.kotoba` — `build-graph`, `run-request!`,
   `approve!`: the `langgraph.graph/state-graph` wiring itself.
 
 ```bash
