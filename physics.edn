@@ -1,0 +1,37 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a document-handling and verification robot
+;; performs vendor due diligence, procurement request drafting and logistics
+;; coordination for a defence procurement and logistics administration
+;; (ISIC 8422). The physical verification and logistics work declared here:
+;; the incoming-inspection tensile test of a coupon cut from a vendor's
+;; delivered steel lot (does the lot meet the ordered grade?), and the
+;; depot AMR moving a delivered 1 t pallet from the receiving dock to the
+;; quarantine bay until the lot is accepted.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isic-8422"
+ :cases
+ [{:id :delivered-steel-lot-coupon-test
+   :kind :material
+   :procedure "incoming inspection pulls a 10 mm round proportional coupon (50 mm gauge) cut from the vendor's delivered S355 steel lot; the lot is swept over the yield strengths a delivery might actually have"
+   :params {:length-m 0.05 :area-m2 7.854e-5 :youngs-modulus-pa 210.0e9 :hardening-pa 1.0e9
+            :density-kg-m3 7850.0 :max-force-n 40000.0}
+   :sweep {:param :yield-stress-pa :values [320.0e6 340.0e6 355.0e6 370.0e6 400.0e6]}
+   :quantity :yield-force-n
+   :limit {:min 27882.0 :basis "EN 10025-2 S355: minimum yield strength 355 MPa (nominal thickness up to 16 mm) times the 78.54 mm2 coupon area; ordered grade and coupon geometry are this case's assumptions"}
+   :boundary {:lo 300.0e6 :hi 420.0e6}}
+  {:id :delivered-pallet-to-quarantine-bay
+   :kind :transport
+   :procedure "depot AMR moves a delivered 1 t pallet from the receiving dock to the quarantine bay, where it waits for acceptance; the bay distance depends on the depot layout"
+   :params {:mass-kg 300.0 :payload-kg 1000.0 :v-max-mps 1.5 :a-max-mps2 0.3
+            :brake-decel-mps2 0.6 :drive-force-n 700.0 :crr 0.012
+            :cog-height-m 0.30 :payload-cog-height-m 0.70 :support-half-length-m 0.60
+            :max-time-s 1800.0}
+   :sweep {:param :distance-m :values [30.0 50.0 80.0 110.0 150.0]}
+   :quantity :cycle-time-s
+   :limit {:max 75.0 :basis "estimate: the receiving dock must clear one pallet position per 75 s during a convoy unload"}
+   :boundary {:lo 10.0 :hi 300.0}}]}
